@@ -1,0 +1,30 @@
+{% extends "dapp/base.html" %}
+{% block title %}Upload Image{% endblock title %}
+{% block content %}
+    {% if upload_error %}
+        <div class="alert alert-danger my-4" role="alert">
+            Too many request, try again in the while
+        </div>
+    {% else %}
+    <div class="jumbotron">
+        <div class="form-content">
+            <h1 class='display-4'>Hello, {{user_data.username}} </h1>
+            <p class='lead'>Your actual plan is <b>{{profile_data.plan}}</b></p>
+            <hr class='my-4'/>
+            <form method='POST' enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class='btn btn-dark' type="submit">Upload</button>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+    {% if image_urls %}
+        <div>
+            {% if image_200_url %} <a href="{{image_200_url}}">200x200</a> {% endif %}
+            {% if image_400_url %} <a href="{{image_400_url}}">400x400</a> {% endif %}
+            {% if image_original_url %} <a href="{{image_original_url}}">original</a> {% endif %}
+            {% if image_download %} <a href="{{image_download}}" download>download original</a> {% endif %}
+        </div>
+    {% endif %}
+{% endblock content %}
